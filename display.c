@@ -1,7 +1,6 @@
 /*====================== display.c ========================
 Contains functions for basic manipulation of a screen 
 represented as a 2 dimensional array of colors.
-
 A color is an ordered triple of ints, with each value standing
 for red, green and blue respectively
 ==================================================*/
@@ -30,20 +29,20 @@ of the screen.
 If you wish to change this behavior, you can change the indicies
 of s that get set. For example, using s[x][YRES-1-y] will have
 pixel 0, 0 located at the lower left corner of the screen
-
 jdyrlandweaver
 ====================*/
 void plot( screen s, zbuffer zb, color c, int x, int y, double z) {
   int newy = YRES - 1 - y;
-  if ( x >= 0 && x < XRES && newy >=0 && newy < YRES )
+  if ( x >= 0 && x < XRES && newy >=0 && newy < YRES && z >= zb[x][newy] ) {
     s[x][newy] = c;
+    zb[x][newy] = z;
+  }
 }
 
 /*======== void clear_screen() ==========
 Inputs:   screen s  
 Returns: 
 Sets every color in screen s to black
-
 jdyrlandweaver
 ====================*/
 void clear_screen( screen s ) {
@@ -68,7 +67,6 @@ void clear_screen( screen s ) {
 Inputs:   zbuffer   
 Returns: 
 Sets all entries in the zbufffer to LONG_MIN
-
 jdyrlandweaver
 ====================*/
 void clear_zbuffer( zbuffer zb ) {
@@ -86,7 +84,6 @@ Inputs:   screen s
 Returns: 
 Saves screen s as a valid ppm file using the
 settings in ml6.h
-
 02/12/10 09:14:07
 jdyrlandweaver
 ====================*/
@@ -115,7 +112,6 @@ by file.
 If the extension for file is an image format supported
 by the "convert" command, the image will be saved in
 that format.
-
 02/12/10 09:14:46
 jdyrlandweaver
 ====================*/
@@ -143,7 +139,6 @@ void save_extension( screen s, char *file) {
 Inputs:   screen s 
 Returns: 
 Will display the screen s on your monitor
-
 02/12/10 09:16:30
 jdyrlandweaver
 ====================*/
